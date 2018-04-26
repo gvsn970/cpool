@@ -23,13 +23,20 @@ public class ConsultancyPoolRepositoryImpl implements ConsultancyPoolRepository 
 			if (consultdto.getFname() != null && consultdto.getLname() != null) {
 				consultdto.setFk_skillset_id(consultdto.getFk_skillset_id().replaceFirst(",",""));
 				consultdto.setFk_prefered_location_id(consultdto.getFk_prefered_location_id().replaceFirst(",",""));
-				boolean isExist = isValidEmail(consultdto.getEmail());
-				if (isExist) {
-					consultdto.setName(consultdto.getFname() + " " + consultdto.getLname());
-					entityManager.persist(consultdto);
-					return 1;
+				boolean isEmailExist = isValidEmail(consultdto.getEmail());
+				boolean ismobileExist = isValidMobile(consultdto.getMobile());
+				if (isEmailExist) {
+					if(ismobileExist )
+					{
+						consultdto.setName(consultdto.getFname() + " " + consultdto.getLname());
+						entityManager.persist(consultdto);
+						return 1;
+						
+					}else {
+						return 2;
+					}
 				} else {
-					return 2;
+					return 3;
 				}
 
 			}
@@ -42,9 +49,17 @@ public class ConsultancyPoolRepositoryImpl implements ConsultancyPoolRepository 
 	}
 
 	public boolean isValidEmail(String email) {
-		String hql1 = "select * from cpool_consultant fs where (fs.email='" + email + "') and fs.delete_status=0";
+		String hql1 = "select * from cpool_consultant cpl where (cpl.email='" + email + "') and cpl.delete_status=0";
 		boolean userlist = entityManager.createNativeQuery(hql1).getResultList().isEmpty();
 		if (userlist) {
+			return true;
+		}
+		return false;
+	}
+	public boolean isValidMobile(String mobile) {
+		String query = "select * from cpool_consultant cpl where (cpl.mobile='" + mobile + "') and cpl.delete_status=0";
+		boolean usermobile = entityManager.createNativeQuery(query).getResultList().isEmpty();
+		if (usermobile) {
 			return true;
 		}
 		return false;

@@ -36,12 +36,18 @@ public class ConsultancyPoolController {
 			response.setMessage("user details added");
 			response.setDescription("user details added successfully");
 			return new ResponseEntity<Response>(response, HttpStatus.OK);
-		} else if (roweffected == 2) {
+		}else if (roweffected == 2) {
+			response.setStatus(400);
+			response.setMessage("user already exist with this mobile");
+			response.setDescription("user already exist with this mobile .choose another mobile");
+			return new ResponseEntity<Response>(response, HttpStatus.BAD_REQUEST);
+		} else if (roweffected == 3) {
 			response.setStatus(400);
 			response.setMessage("user already exist with this email");
 			response.setDescription("user already exist with this mail id .choose another mailid");
 			return new ResponseEntity<Response>(response, HttpStatus.BAD_REQUEST);
-		} else {
+		}
+		 else {
 			response.setStatus(400);
 			response.setMessage("try again and empty fields exist");
 			response.setDescription("try again and  all fields are mandatory");
