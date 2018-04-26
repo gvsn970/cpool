@@ -47,8 +47,8 @@ public class ConsultancyPool {
 	@Column(name = "current_organization")
 	private String current_organization;
 
-	@Column(name = "current_location")
-	private String current_location;
+	@Column(name = "fk_currentlocation_id")
+	private String fk_currentlocation_id;
 
 	@Column(name = "current_designation")
 	private String current_designation;
@@ -86,10 +86,6 @@ public class ConsultancyPool {
 
 	public int getConsultant_id() {
 		return consultant_id;
-	}
-
-	public void setConsultant_id(int consultant_id) {
-		this.consultant_id = consultant_id;
 	}
 
 	public String getName() {
@@ -156,12 +152,12 @@ public class ConsultancyPool {
 		this.current_organization = current_organization;
 	}
 
-	public String getCurrent_location() {
-		return current_location;
+	public String getFk_currentlocation_id() {
+		return fk_currentlocation_id;
 	}
 
-	public void setCurrent_location(String current_location) {
-		this.current_location = current_location;
+	public void setFk_currentlocation_id(String fk_currentlocation_id) {
+		this.fk_currentlocation_id = fk_currentlocation_id;
 	}
 
 	public String getCurrent_designation() {
@@ -252,6 +248,10 @@ public class ConsultancyPool {
 		this.deleted_on = deleted_on;
 	}
 
+	public void setConsultant_id(int consultant_id) {
+		this.consultant_id = consultant_id;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -273,8 +273,8 @@ public class ConsultancyPool {
 		builder.append(previous_organization);
 		builder.append(", current_organization=");
 		builder.append(current_organization);
-		builder.append(", current_location=");
-		builder.append(current_location);
+		builder.append(", fk_currentlocation_id=");
+		builder.append(fk_currentlocation_id);
 		builder.append(", current_designation=");
 		builder.append(current_designation);
 		builder.append(", current_ctc=");
@@ -302,7 +302,7 @@ public class ConsultancyPool {
 	}
 
 	public ConsultancyPool(String name, String fname, String lname, String mobile, String email, String education,
-			String previous_organization, String current_organization, String current_location,
+			String previous_organization, String current_organization, String fk_currentlocation_id,
 			String current_designation, double current_ctc, String fk_sourceof_profile_id, int notice_period,
 			String fk_skillset_id, String fk_prefered_location_id, String fk_experience_id, int delete_status,
 			String updated_on, String created_on, String deleted_on) {
@@ -315,7 +315,7 @@ public class ConsultancyPool {
 		this.education = education;
 		this.previous_organization = previous_organization;
 		this.current_organization = current_organization;
-		this.current_location = current_location;
+		this.fk_currentlocation_id = fk_currentlocation_id;
 		this.current_designation = current_designation;
 		this.current_ctc = current_ctc;
 		this.fk_sourceof_profile_id = fk_sourceof_profile_id;

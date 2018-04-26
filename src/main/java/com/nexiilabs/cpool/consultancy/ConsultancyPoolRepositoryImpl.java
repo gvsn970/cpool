@@ -56,8 +56,8 @@ public class ConsultancyPoolRepositoryImpl implements ConsultancyPoolRepository 
 		try {
 			String query = "SELECT cpl.consultant_id,cpl.name,cpl.email,cpl.mobile,cpl.fname,cpl.lname,cpl.current_ctc," + 
 					"exp.experience,sp.sourceof_profile,GROUP_CONCAT(DISTINCT ss.skillset_name),GROUP_CONCAT(DISTINCT pfd.preferedlocation_name)," + 
-					"cpl.current_location,cpl.notice_period,cpl.education,cpl.current_designation,cpl.current_organization,cpl.previous_organization,DATEDIFF(CURDATE(),cpl.created_on) " + 
-					"AS days FROM cpool_consultant cpl " + 
+					"cl.currentlocation_name,cpl.notice_period,cpl.education,cpl.current_designation,cpl.current_organization,cpl.previous_organization,DATEDIFF(CURDATE(),cpl.created_on) " + 
+					"AS days FROM cpool_consultant cpl JOIN cpool_current_location cl ON cl.currentlocation_id=cpl.fk_currentlocation_id " + 
 					"JOIN cpool_sourceof_profile sp ON cpl.fk_sourceof_profile_id=sp.sourceof_profile_id JOIN " + 
 					"cpool_experience exp ON cpl.fk_experience_id=exp.experience_id,cpool_preffered_location pfd,cpool_skill_set ss where cpl.delete_status=0 AND " + 
 					"FIND_IN_SET(ss.skillset_id,cpl.fk_skillset_id) AND FIND_IN_SET(pfd.prefered_location_id,cpl.fk_prefered_location_id) " + 
@@ -99,7 +99,7 @@ public class ConsultancyPoolRepositoryImpl implements ConsultancyPoolRepository 
 	}
 
 	@Override
-	public List<ConsultantSearchResponseDTO> SearchResults(String fk_skillset_id, String fk_experience_id, String current_location,String fk_prefered_location_id, int notice_period, String min_exp, String max_exp, double min_ctc,double max_ctc) {
+	public List<ConsultantSearchResponseDTO> SearchResults(String fk_skillset_id, String fk_experience_id, String fk_currentlocation_id,String fk_prefered_location_id, int notice_period, String min_exp, String max_exp, double min_ctc,double max_ctc) {
 		List<ConsultantSearchResponseDTO> searchlist = new ArrayList<ConsultantSearchResponseDTO>();
 		try {
 
@@ -107,15 +107,15 @@ public class ConsultancyPoolRepositoryImpl implements ConsultancyPoolRepository 
 			String query="select  cpl.consultant_id,cpl.name,cpl.email,cpl.mobile,cpl.fname,cpl.lname,cpl.current_ctc," + 
 					"exp.experience,sp.sourceof_profile,GROUP_CONCAT(DISTINCT ss.skillset_name)," + 
 					" GROUP_CONCAT(DISTINCT pl.preferedlocation_name),cpl.notice_period," + 
-					"cpl.current_location,cpl.education,cpl.current_designation,cpl.current_organization," + 
+					"cl.currentlocation_name,cpl.education,cpl.current_designation,cpl.current_organization," + 
 					"cpl.previous_organization," + 
-					"DATEDIFF(CURDATE(),cpl.created_on) AS days FROM cpool_consultant cpl JOIN  cpool_experience exp ON " + 
+					"DATEDIFF(CURDATE(),cpl.created_on) AS days FROM cpool_consultant cpl JOIN cpool_current_location cl ON cl.currentlocation_id=cpl.fk_currentlocation_id JOIN  cpool_experience exp ON " + 
 					"exp.experience_id=cpl.fk_experience_id JOIN cpool_sourceof_profile sp ON " + 
 					"sp.sourceof_profile_id=cpl.fk_sourceof_profile_id,cpool_skill_set ss,cpool_preffered_location pl WHERE   cpl.delete_status=0 " + 
 					"AND FIND_IN_SET(ss.skillset_id,cpl.fk_skillset_id) AND cpl.fk_skillset_id " + 
 					"LIKE '%"+fk_skillset_id+"%' AND  FIND_IN_SET(pl.prefered_location_id,cpl.fk_prefered_location_id) AND " + 
 					"cpl.fk_prefered_location_id LIKE '%"+fk_prefered_location_id+"%' AND " + 
-					"cpl.current_location LIKE '%"+current_location+"' AND cpl.fk_experience_id BETWEEN '"+min_exp+"' AND '"+max_exp+"' AND " + 
+					"cpl.fk_currentlocation_id LIKE '%"+fk_currentlocation_id+"' AND cpl.fk_experience_id BETWEEN '"+min_exp+"' AND '"+max_exp+"' AND " + 
 					"cpl.notice_period <= '"+notice_period+"' AND   cpl.current_ctc " + 
 					" BETWEEN '"+min_ctc+"' AND '"+max_ctc+"'  GROUP BY cpl.consultant_id;";
 			ConsultantSearchResponseDTO consultancyPool = null;
@@ -165,8 +165,8 @@ public class ConsultancyPoolRepositoryImpl implements ConsultancyPoolRepository 
       
                     String query="SELECT cpl.consultant_id,cpl.name,cpl.email,cpl.mobile,cpl.fname,cpl.lname,cpl.current_ctc," + 
                     		"exp.experience,sp.sourceof_profile,GROUP_CONCAT(DISTINCT ss.skillset_name)," + 
-                    		"GROUP_CONCAT(DISTINCT pfd.preferedlocation_name),cpl.current_location,cpl.notice_period,DATEDIFF(CURDATE(),cpl.created_on)AS days,cpl.education,cpl.current_designation,cpl.current_organization,cpl.previous_organization" + 
-                    		" FROM cpool_consultant cpl " + 
+                    		"GROUP_CONCAT(DISTINCT pfd.preferedlocation_name),cl.currentlocation_name,cpl.notice_period,DATEDIFF(CURDATE(),cpl.created_on)AS days,cpl.education,cpl.current_designation,cpl.current_organization,cpl.previous_organization" + 
+                    		" FROM cpool_consultant cpl JOIN cpool_current_location cl ON cl.currentlocation_id=cpl.fk_currentlocation_id " + 
                     		"JOIN cpool_sourceof_profile sp ON cpl.fk_sourceof_profile_id=sp.sourceof_profile_id JOIN " + 
                     		"cpool_experience exp ON cpl.fk_experience_id=exp.experience_id,cpool_skill_set ss," + 
                     		"cpool_preffered_location pfd " + 
