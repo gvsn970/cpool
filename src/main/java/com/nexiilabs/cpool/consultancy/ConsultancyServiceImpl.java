@@ -24,11 +24,11 @@ public class ConsultancyServiceImpl implements ConsultancyService {
 	}
 
 	@Override
-	public List<ConsultantSearchResponseDTO> SearchResults(String fk_skillset_id, String fk_experience_id,
-			String fk_currentlocation_id, String fk_prefered_location_id, int notice_period, String min_exp,
-			String max_exp, double min_ctc, double max_ctc) {
+	public List<ConsultantSearchResponseDTO> SearchResults(String fk_skillset_id,
+			String fk_currentlocation_id, String fk_prefered_location_id, int notice_period, int min_exp,
+			int max_exp, double min_ctc, double max_ctc) {
 
-		return repository.SearchResults(fk_skillset_id, fk_experience_id, fk_currentlocation_id, fk_prefered_location_id,
+		return repository.SearchResults(fk_skillset_id, fk_currentlocation_id, fk_prefered_location_id,
 				notice_period, min_exp, max_exp, min_ctc, max_ctc);
 	}
 	@Override

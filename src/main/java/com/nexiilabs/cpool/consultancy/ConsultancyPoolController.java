@@ -58,13 +58,13 @@ public class ConsultancyPoolController {
 	@RequestMapping(value = "/searchlist", method = RequestMethod.POST, produces = "application/Json")
 	public List<ConsultantSearchResponseDTO> consultancySearchList(
 			@RequestParam("fk_skillset_id") String fk_skillset_id,
-			@RequestParam("fk_experience_id") String fk_experience_id,
+			//@RequestParam("fk_experience_id") String fk_experience_id,
 			@RequestParam("fk_currentlocation_id") String fk_currentlocation_id,
 			@RequestParam("fk_prefered_location_id") String fk_prefered_location_id,
-			@RequestParam("notice_period") int notice_period, @RequestParam("min_exp") String min_exp,
-			@RequestParam("max_exp") String max_exp, @RequestParam("min_ctc") double min_ctc,
+			@RequestParam("notice_period") int notice_period, @RequestParam("min_exp") int min_exp,
+			@RequestParam("max_exp") int max_exp, @RequestParam("min_ctc") double min_ctc,
 			@RequestParam("max_ctc") double max_ctc) {
-		return service.SearchResults(fk_skillset_id, fk_experience_id, fk_currentlocation_id, fk_prefered_location_id,
+		return service.SearchResults(fk_skillset_id, fk_currentlocation_id, fk_prefered_location_id,
 				notice_period, min_exp, max_exp, min_ctc, max_ctc);
 	}
 	@RequestMapping(value="/viewuserbyid",method=RequestMethod.POST,produces="application/Json")

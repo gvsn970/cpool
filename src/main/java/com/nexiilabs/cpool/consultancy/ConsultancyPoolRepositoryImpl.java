@@ -114,7 +114,7 @@ public class ConsultancyPoolRepositoryImpl implements ConsultancyPoolRepository 
 	}
 
 	@Override
-	public List<ConsultantSearchResponseDTO> SearchResults(String fk_skillset_id, String fk_experience_id, String fk_currentlocation_id,String fk_prefered_location_id, int notice_period, String min_exp, String max_exp, double min_ctc,double max_ctc) {
+	public List<ConsultantSearchResponseDTO> SearchResults(String fk_skillset_id ,String fk_currentlocation_id,String fk_prefered_location_id, int notice_period, int min_exp, int max_exp, double min_ctc,double max_ctc) {
 		List<ConsultantSearchResponseDTO> searchlist = new ArrayList<ConsultantSearchResponseDTO>();
 		try {
 
